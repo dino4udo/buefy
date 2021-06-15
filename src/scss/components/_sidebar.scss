@@ -52,7 +52,7 @@ $css-vars-map: (
         }
         &.is-mini {
             width: var(--sidebar-mobile-width);
-            &.is-mini-expand:hover {
+            &.is-mini-expand:hover:not(.is-mini-delayed) {
                 // transition: width $speed-slow $easing;
                 transition-property: width;
                 transition-duration: calc(var(--speed, #{$speed}) * 2);
