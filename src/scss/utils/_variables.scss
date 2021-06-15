@@ -1,16 +1,25 @@
-$speed-slow: 150ms !default;
-$speed-slower: 250ms !default;
+// $speed-slow: 150ms !default;
+// $speed-slower: 250ms !default;
 
-$primary: #7957d5 !default;
-$primary-invert: findColorInvert(#7957d5) !default;
-$primary-light: findLightColor(#7957d5) !default;
-$primary-dark: findDarkColor(#7957d5) !default;
+$primary: hsl(256,60,59) !default;
+$primary-invert: findColorInvert($primary) !default;
+$primary-light: findLightColor($primary) !default;
+$primary-dark: findDarkColor($primary) !default;
 
-$info: #167df0 !default;
+$info: hsl(212,88,51) !default;
 
 $link: $primary !default;
-$link-invert: $primary-invert !default;
+$link-invert: var(--primary-invert) !default;
 $link-visited: $grey !default;
-$link-focus-border: $primary !default;
+$link-focus-border: var(--primary) !default;
 
-$label-weight: $weight-semibold !default;
+$label-weight: var(--weight-semibold, #{$weight-semibold}) !default;
+
+$at-root: true !default;
+
+:root {
+    @include registerCSSVarColor(
+        'primary', ($primary, $primary-invert, $primary-light, $primary-dark),
+        'link', ($link, $link-invert)
+    )
+}

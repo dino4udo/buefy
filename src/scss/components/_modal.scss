@@ -1,3 +1,13 @@
+$modal-background-color: var(--background, #{$background}) !default;
+
+$css-vars-map: (
+    'modal-background-color': ($modal-background-color),
+);
+
+.modal, [class^="modal-"] {
+    @include registerCSSVars($css-vars-map, $at-root)
+}
+
 .modal {
     &.is-full-screen {
         > .animation-content,
@@ -6,7 +16,7 @@
             height: 100%;
             max-height: 100vh;
             margin: 0;
-            background-color: $background;
+            background-color: var(--modal-background-color);
         }
     }
     .animation-content {

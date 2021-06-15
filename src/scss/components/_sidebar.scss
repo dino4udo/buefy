@@ -1,20 +1,35 @@
 $sidebar-background: $modal-background-background-color !default;
-$sidebar-box-shadow: 5px 0px 13px 3px rgba($black, 0.1) !default;
+$sidebar-shadow-color: rgba(var(--scheme-invert-rgb, #{bulmaToRGB($black)}), 0.1) !default;
+$sidebar-box-shadow: 5px 0px 13px 3px $sidebar-shadow-color !default;
 $sidebar-width: 260px !default;
 $sidebar-mobile-width: 80px !default;
 $sidebar-mobile-breakpoint: $tablet !default;
+
 $sidebar-colors: $navbar-colors !default;
+
+$css-vars-map: (
+    'sidebar-background': ($sidebar-background),
+    'sidebar-shadow-color': ($sidebar-shadow-color),
+    'sidebar-box-shadow': ($sidebar-box-shadow),
+    'sidebar-width': ($sidebar-width),
+    'sidebar-mobile-width': ($sidebar-mobile-width),
+    'sidebar-mobile-breakpoint': ($sidebar-mobile-breakpoint),
+);
+
+.b-sidebar, [class^="b-sidebar-"] {
+    @include registerCSSVars($css-vars-map, $at-root)
+}
 
 .b-sidebar {
     .sidebar-content {
-        background-color: $background;
-        box-shadow: $sidebar-box-shadow;
-        width: $sidebar-width;
+        background-color: var(--background, #{$background});
+        box-shadow: var(--sidebar-box-shadow);
+        width: var(--sidebar-width);
         z-index: 39;
         @each $name, $pair in $sidebar-colors {
             $color: nth($pair, 1);
             &.is-#{$name} {
-                background-color: $color;
+                background-color: var(--#{$name}, #{$color});
             }
         }
         &.is-fixed {
@@ -36,11 +51,14 @@ $sidebar-colors: $navbar-colors !default;
             }
         }
         &.is-mini {
-            width: $sidebar-mobile-width;
+            width: var(--sidebar-mobile-width);
             &.is-mini-expand:hover {
-                transition: width $speed-slow $easing;
+                // transition: width $speed-slow $easing;
+                transition-property: width;
+                transition-duration: calc(var(--speed, #{$speed}) * 2);
+                transition-timing-function: var(--easing, #{$easing});
                 &:not(.is-fullwidth) {
-                    width: $sidebar-width;
+                    width: var(--sidebar-width);
                     &.is-mini-expand-fixed {
                         position: fixed;
                     }
@@ -51,7 +69,10 @@ $sidebar-colors: $navbar-colors !default;
             position: static;
         }
         &.is-absolute, &.is-static {
-            transition: width $speed-slow $easing;
+            // transition: width $speed-slow $easing;
+            transition-property: width;
+            transition-duration: calc(var(--speed, #{$speed}) * 2);
+            transition-timing-function: var(--easing, #{$easing});
         }
         &.is-fullwidth {
             width: 100%;
@@ -68,10 +89,10 @@ $sidebar-colors: $navbar-colors !default;
         }
         @media screen and (max-width: $sidebar-mobile-breakpoint - 1px) {
             &.is-mini-mobile {
-                width: $sidebar-mobile-width;
+                width: var(--sidebar-mobile-width);
                 &.is-mini-expand:hover {
                     &:not(.is-fullwidth-mobile) {
-                        width: $sidebar-width;
+                        width: var(--sidebar-width);
                         &.is-mini-expand-fixed {
                             position: fixed;
                         }
@@ -91,7 +112,7 @@ $sidebar-colors: $navbar-colors !default;
     }
     .sidebar-background {
         @include overlay;
-        background: $sidebar-background;
+        background: var(--sidebar-background);
         position: fixed;
         z-index: 38;
     }

@@ -15,8 +15,8 @@
     .upload-draggable {
         cursor: pointer;
         padding: 0.25em;
-        border: 1px dashed $grey-light;
-        border-radius: $radius-large;
+        border: 1px dashed var(--grey-light, #{$grey-light});
+        border-radius: var(--radius-large, #{$radius-large});
         &.is-disabled {
             opacity: 0.5;
             cursor: not-allowed;
@@ -39,8 +39,9 @@
             @each $name, $pair in $file-colors {
                 $color: nth($pair, 1);
                 &.is-#{$name} {
-                    border-color: $color;
-                    background: rgba($color, 0.05);
+                    --hover-background-color: #{bulmaCSSVarRgba($name, 0.05)};
+                    border-color: var(--#{$name}, #{$color});
+                    background: var(--hover-box-shadow-color, #{bulmaRgba($color, 0.05)});
                 }
             }
         }
@@ -52,11 +53,11 @@
         width: 100%;
     }
     &.is-rounded {
-        border-radius: $radius-rounded;
+        border-radius: var(--radius-rounded, #{$radius-rounded});
 
         .file-name {
-            border-top-right-radius: $radius-rounded;
-            border-bottom-right-radius: $radius-rounded;
+            border-top-right-radius: var(--radius-rounded, #{$radius-rounded});
+            border-bottom-right-radius: var(--radius-rounded, #{$radius-rounded});
         }
     }
 }

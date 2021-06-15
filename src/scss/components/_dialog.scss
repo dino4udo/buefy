@@ -4,15 +4,15 @@
         width: auto;
         .modal-card-head {
             font-size: $size-5;
-            font-weight: $weight-semibold;
+            font-weight: var(--weight-semibold, #{$weight-semibold});
         }
         .modal-card-body {
             .field {
                 margin-top: 16px;
             }
             &.is-titleless {
-                border-top-left-radius: $card-radius;
-                border-top-right-radius: $card-radius;
+                border-top-left-radius: var(--card-radius, #{$card-radius});
+                border-top-right-radius: var(--card-radius, #{$card-radius});
             }
         }
         .modal-card-foot {
@@ -20,7 +20,7 @@
             .button {
                 display: inline; // Fix Safari centering
                 min-width: 5em;
-                font-weight: $weight-semibold;
+                font-weight: var(--weight-semibold, #{$weight-semibold});
             }
         }
         @include tablet {

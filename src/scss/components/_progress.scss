@@ -1,20 +1,30 @@
+
+$progress-value-color: var(--scheme-main, #{$scheme-main}) !default;
+$progress-value-size: var(--size-normal, #{$size-normal}) !default;
+
+$css-vars-map: (
+    'progress-value-color': ($progress-value-color),
+    'progress-value-size': ($progress-value-size),
+);
+
+.progress, [class^="progress-"] {
+    @include registerCSSVars($css-vars-map, $at-root)
+}
+
 @mixin progress-size() {
     &.is-small {
         + .progress-value, .progress-value {
-            font-size: calc(#{$size-small} / 1.5);
-            line-height: $size-small;
+            --progress-value-size: var(--size-small, #{$size-small});
         }
     }
     &.is-medium {
         + .progress-value, .progress-value {
-            font-size: calc(#{$size-medium} / 1.5);
-            line-height: $size-medium;
+            --progress-value-size: var(--size-medium, #{$size-medium});
         }
     }
     &.is-large {
         + .progress-value, .progress-value {
-            font-size: calc(#{$size-large} / 1.5);
-            line-height: $size-large;
+            --progress-value-size: var(--size-large, #{$size-large});
         }
     }
 }
@@ -32,10 +42,10 @@
         top: 0;
         left: 50%;
         transform: translateX(-50%);
-        font-size: calc(#{$size-normal} / 1.5);
-        line-height: $size-normal;
-        font-weight: $weight-bold;
-        color: findColorInvert($progress-bar-background-color);
+        font-size: calc(var(--progress-value-size) / 1.5);
+        line-height: var(--progress-value-size);
+        font-weight: var(--weight-bold, #{$weight-bold});
+        color: var(--progress-value-color);
         white-space: nowrap;
     }
 
@@ -50,7 +60,7 @@
 
         &.is-more-than-half {
             +.progress-value {
-                color: findColorInvert($progress-value-background-color);
+                color: var(--progress-value-color);
             }
 
             @each $name, $pair in $progress-colors {
@@ -58,7 +68,7 @@
                 $color-invert: nth($pair, 2);
                 &.is-#{$name} {
                     + .progress-value {
-                        color: $color-invert;
+                        color: var(--#{$name}-invert, #{$color-invert});
                     }
                 }
             }
@@ -68,27 +78,27 @@
     &.is-not-native {
         @extend .progress;
         white-space: nowrap;
-        background-color: $progress-bar-background-color;
-        border-radius: $progress-border-radius;
+        background-color: var(--progress-bar-background-color);
+        border-radius: var(--progress-border-radius);
 
         .progress-bar {
             position: relative;
             display: inline-block;
             vertical-align: top;
             height: 100%;
-            background-color: $progress-value-background-color;
+            background-color: var(--progress-value-background-color);
 
             .progress-value {
-                color: findColorInvert($progress-value-background-color);
+                color: var(--progress-value-color);
             }
 
             @each $name, $pair in $progress-colors {
                 $color: nth($pair, 1);
                 $color-invert: nth($pair, 2);
                 &.is-#{$name} {
-                    background-color: $color;
+                    background-color: var(--#{$name}, #{$color});
                     .progress-value {
-                        color: $color-invert;
+                        color: var(--#{$name}-invert, #{$color-invert});
                     }
                 }
             }

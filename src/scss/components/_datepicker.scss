@@ -1,14 +1,32 @@
-$datepicker-background-color: $dropdown-content-background-color !default;
-$datepicker-radius: $dropdown-content-radius !default;
-$datepicker-shadow: $dropdown-content-shadow !default;
+$datepicker-background-color: var(--dropdown-content-background-color, #{$dropdown-content-background-color}) !default;
+$datepicker-radius: var(--dropdown-content-radius, #{$dropdown-content-radius}) !default;
+$datepicker-shadow: var(--dropdown-content-shadow, #{$dropdown-content-shadow}) !default;
 $datepicker-header-color: $grey !default;
-$datepicker-today-border: solid 1px rgba($primary, 0.5) !default;
+$datepicker-today-border: solid 1px !default;
 $datepicker-item-color: $grey-dark !default;
 $datepicker-item-disabled-color: $grey-light !default;
-$datepicker-item-hover-color: $scheme-invert !default;
-$datepicker-item-hover-background-color: $background !default;
-$datepicker-item-selected-color: $primary-invert !default;
-$datepicker-item-selected-background-color: $primary !default;
+$datepicker-item-hover-color: var(--scheme-invert, #{$scheme-invert}) !default;
+$datepicker-item-hover-background-color: var(--background, #{$background}) !default;
+$datepicker-item-selected-color: var(--primary-invert, #{$primary-invert}) !default;
+$datepicker-item-selected-background-color: var(--primary, #{$primary}) !default;
+
+$css-vars-map: (
+    'datepicker-background-color': ($datepicker-background-color),
+    'datepicker-radius': ($datepicker-radius),
+    'datepicker-shadow': ($datepicker-shadow),
+    'datepicker-header-color': ($datepicker-header-color),
+    'datepicker-today-border': ($datepicker-today-border),
+    'datepicker-item-color': ($datepicker-item-color),
+    'datepicker-item-disabled-color': ($datepicker-item-disabled-color),
+    'datepicker-item-hover-color': ($datepicker-item-hover-color),
+    'datepicker-item-hover-background-color': ($datepicker-item-hover-background-color),
+    'datepicker-item-selected-color': ($datepicker-item-selected-color),
+    'datepicker-item-selected-background-color': ($datepicker-item-selected-background-color),
+);
+
+.datepicker, [class^="datepicker-"] {
+    @include registerCSSVars($css-vars-map, $at-root)
+}
 
 .datepicker {
     font-size: 0.875rem;
@@ -17,12 +35,12 @@ $datepicker-item-selected-background-color: $primary !default;
         width: 100%;
         .input[readonly] {
             cursor: pointer;
-            box-shadow: $input-shadow;
+            box-shadow: var(--input-shadow, #{$input-shadow});
             &:focus,
             &.is-focused,
             &:active,
             &.is-active {
-                box-shadow: $input-focus-box-shadow-size $input-focus-box-shadow-color;
+                box-shadow: var(--input-focus-box-shadow-size, #{$input-focus-box-shadow-size}) var(--input-focus-box-shadow-color, #{$input-focus-box-shadow-color})
             }
         }
     }
@@ -33,9 +51,9 @@ $datepicker-item-selected-background-color: $primary !default;
         }
     }
     .dropdown-content {
-        background-color: $datepicker-background-color;
-        border-radius: $datepicker-radius;
-        box-shadow: $datepicker-shadow;
+        background-color: var(--datepicker-background-color);
+        border-radius: var(--datepicker-radius);
+        box-shadow: var(--datepicker-shadow);
     }
     .dropdown-item {
         font-size: inherit;
@@ -43,12 +61,12 @@ $datepicker-item-selected-background-color: $primary !default;
     .datepicker-header {
         padding-bottom: 0.875rem;
         margin-bottom: 0.875rem;
-        border-bottom: 1px solid $grey-lighter;
+        border-bottom: 1px solid var(--grey-lighter, #{$grey-lighter});
     }
     .datepicker-footer {
         margin-top: 0.875rem;
         padding-top: 0.875rem;
-        border-top: 1px solid $grey-lighter;
+        border-top: 1px solid var(--grey-lighter, #{$grey-lighter});
     }
     .datepicker-table {
         display: table;
@@ -57,14 +75,14 @@ $datepicker-item-selected-background-color: $primary !default;
             text-align: center;
             vertical-align: middle;
             display: table-cell;
-            border-radius: $radius;
+            border-radius: var(--radius, #{$radius});
             padding: 0.5rem 0.75rem;
         }
         .datepicker-header {
             display: table-header-group;
             .datepicker-cell {
-                color: $datepicker-header-color;
-                font-weight: $weight-semibold;
+                color: var(--datepicker-header-color);
+                font-weight: var(--weight-semibold, #{$weight-semibold});
             }
         }
         .datepicker-body {
@@ -87,61 +105,63 @@ $datepicker-item-selected-background-color: $primary !default;
             }
             .datepicker-cell {
                 &.is-unselectable {
-                    color: $datepicker-item-disabled-color;
+                    color: var(--datepicker-item-disabled-color);
                 }
                 &.is-today {
-                    border: $datepicker-today-border;
+                    --datepicker-today-border-color: #{bulmaCSSVarRgba('primary', 0.5)};
+                    border: var(--datepicker-today-border) var(--datepicker-today-border-color, #{bulmaRgba($primary, 0.5)});
                 }
                 &.is-selectable {
-                    color: $datepicker-item-color;
+                    color: var(--datepicker-item-color);
                     &:hover:not(.is-selected),
                     &:focus:not(.is-selected) {
-                        background-color: $datepicker-item-hover-background-color;
-                        color: $datepicker-item-hover-color;
+                        background-color: var(--datepicker-item-hover-background-color);
+                        color: var(--datepicker-item-hover-color);
                         cursor: pointer;
                     }
                     &.is-within-hovered-range {
                         &.is-first-hovered {
-                            background-color: $grey;
-                            color: $grey-lighter;
+                            background-color: var(--grey, #{$grey});
+                            color: var(--grey-lighter, #{$grey-lighter});
                             border-bottom-right-radius: 0;
                             border-top-right-radius: 0;
                         }
                         &.is-within-hovered {
-                            background-color: $datepicker-item-hover-background-color;
-                            color: $datepicker-item-hover-color;
+                            background-color: var(--datepicker-item-hover-background-color);
+                            color: var(--datepicker-item-hover-color);
                             border-radius: 0;
                         }
                         &.is-last-hovered {
-                            background-color: $grey;
-                            color: $grey-lighter;
+                            background-color: var(--grey, #{$grey});
+                            color: var(--grey-lighter, #{$grey-lighter});
                             border-bottom-left-radius: 0;
                             border-top-left-radius: 0;
                         }
                     }
                 }
                 &.is-selected {
-                    background-color: $datepicker-item-selected-background-color;
-                    color: $datepicker-item-selected-color;
+                    background-color: var(--datepicker-item-selected-background-color);
+                    color: var(--datepicker-item-selected-color);
                     &.is-first-selected {
-                        background-color: $datepicker-item-selected-background-color;
-                        color: $datepicker-item-selected-color;
+                        background-color: var(--datepicker-item-selected-background-color);
+                        color: var(--datepicker-item-selected-color);
                         border-bottom-right-radius: 0;
                         border-top-right-radius: 0;
                     }
                     &.is-within-selected {
-                        background-color: rgba($datepicker-item-selected-background-color, 0.5);
+                        --datepicker-item-selected-background-color: #{bulmaCSSVarRgba('primary', 0.5)};
+                        background-color: var(--datepicker-item-selected-background-color, #{bulmaRgba($primary, 0.5)});
                         border-radius: 0;
                     }
                     &.is-last-selected {
-                        background-color: $datepicker-item-selected-background-color;
-                        color: $datepicker-item-selected-color;
+                        background-color: var(--datepicker-item-selected-background-color);
+                        color: var(--datepicker-item-selected-color);
                         border-bottom-left-radius: 0;
                         border-top-left-radius: 0;
                     }
                 }
                 &.is-nearby:not(.is-selected) {
-                    color: $grey-light;
+                    color: var(--grey-light, #{$grey-light});
                 }
                 &.is-week-number {
                     cursor: default;
@@ -164,7 +184,7 @@ $datepicker-item-selected-background-color: $primary !default;
                                 @each $name, $pair in $form-colors {
                                     $color: nth($pair, 1);
                                     &.is-#{$name} {
-                                        background-color: $color;
+                                        background-color: var(--#{$name} #{$color});
                                     }
                                 }
                             }
@@ -186,7 +206,8 @@ $datepicker-item-selected-background-color: $primary !default;
                             // Currently datepicker only uses primary coloring
                             // Ensure indicator is visible when selected
                             &.is-primary {
-                                background-color: lighten($primary, 15);
+                                --datepicker-background-color-selected: #{bulmaCSSVarLighten('primary', 15%)};
+                                background-color: var(--datepicker-background-color-selected, #{bulmaLighten($primary, 15%)});
                             }
                         }
                     }

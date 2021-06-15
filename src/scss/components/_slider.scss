@@ -1,32 +1,60 @@
-$slider-radius: $radius !default;
-$slider-track-background: $grey-lighter !default;
-$slider-track-radius: $radius !default;
-$slider-track-border: 0px solid $grey !default;
-$slider-track-shadow: 0px 0px 0px $grey !default;
-$slider-thumb-background: $scheme-main !default;
-$slider-thumb-radius: $radius !default;
-$slider-thumb-border: 1px solid $grey-light !default;
+$slider-radius: var(--radius, #{$radius}) !default;
+$slider-size: var(--size-normal, #{$size-normal}) !default;
+$slider-track-background: var(--grey-lighter, #{$grey-lighter}) !default;
+$slider-track-radius: var(--radius, #{$radius}) !default;
+$slider-track-color: var(--grey, #{$grey}) !default;
+$slider-track-border: 0px solid $slider-track-color !default;
+$slider-track-shadow: 0px 0px 0px $slider-track-color !default;
+$slider-thumb-background: var(--scheme-main, #{$scheme-main}) !default;
+$slider-thumb-radius: var(--radius, #{$radius}) !default;
+$slider-thumb-color: var(--grey-light, #{$grey-light}) !default;
+$slider-thumb-border: 1px solid $slider-thumb-color !default;
 $slider-thumb-shadow: none !default;
 $slider-thumb-to-track-ratio: 2 !default;
 $slider-tick-to-track-ratio: 0.5 !default;
 $slider-tick-width: 3px !default;
-$slider-tick-radius: $radius !default;
-$slider-tick-background: $grey-light !default;
+$slider-tick-radius: var(--radius, #{$radius}) !default;
+$slider-tick-background: $slider-thumb-color !default;
 $slider-mark-size: 0.75rem !default;
+
 $slider-colors: $colors !default;
 
-@mixin slider-size($size) {
-	$track-height: $size / $slider-thumb-to-track-ratio;
-	$tick-height: $track-height * $slider-tick-to-track-ratio;
-	$thumb-size: $size;
+$css-vars-map: (
+    'slider-radius': ($slider-radius),
+    'slider-size': ($slider-size),
+    'slider-track-background': ($slider-track-background),
+    'slider-track-radius': ($slider-track-radius),
+    'slider-track-color': ($slider-track-color),
+    'slider-track-border': ($slider-track-border),
+    'slider-track-shadow': ($slider-track-shadow),
+    'slider-thumb-background': ($slider-thumb-background),
+    'slider-thumb-radius': ($slider-thumb-radius),
+    'slider-thumb-color': ($slider-thumb-color),
+    'slider-thumb-border': ($slider-thumb-border),
+    'slider-thumb-shadow': ($slider-thumb-shadow),
+    'slider-thumb-to-track-ratio': ($slider-thumb-to-track-ratio),
+    'slider-tick-to-track-ratio': ($slider-tick-to-track-ratio),
+    'slider-tick-width': ($slider-tick-width),
+    'slider-tick-radius': ($slider-tick-radius),
+    'slider-tick-background': ($slider-tick-background),
+    'slider-mark-size': ($slider-mark-size),
+);
+
+.b-slider, [class^="b-slider-"] {
+    @include registerCSSVars($css-vars-map, $at-root)
+}
+
+@mixin slider-size() {
+	$track-height: calc(#{var(--slider-size)} / #{var(--slider-thumb-to-track-ratio)});
+	$tick-height: calc(#{$track-height} * #{var(--slider-tick-to-track-ratio)});
 
     .b-slider-track {
         height: $track-height;
     }
 
 	.b-slider-thumb {
-		height: $thumb-size;
-		width: $thumb-size;
+		height: var(--slider-size);
+		width: var(--slider-size);
     }
 
     .b-slider-tick {
@@ -34,7 +62,7 @@ $slider-colors: $colors !default;
     }
 
     .b-slider-tick-label {
-        font-size: $slider-mark-size;
+        font-size: var(--slider-mark-size);
         position: absolute;
         top: calc(#{$track-height} / 2 + 2px);
         left: 50%;
@@ -52,16 +80,16 @@ $slider-colors: $colors !default;
         align-items: center;
         position: relative;
         cursor: pointer;
-        background: $slider-track-background;
-        border-radius: $slider-radius;
+        background: var(--slider-track-background);
+        border-radius: var(--slider-radius);
     }
     .b-slider-fill {
         position: absolute;
         height: 100%;
-        box-shadow: $slider-track-shadow;
-        background: $slider-track-background;
+        box-shadow: var(--slider-track-shadow);
+        background: var(--slider-track-background);
         border-radius: $slider-track-radius;
-        border: $slider-track-border;
+        border: var(--slider-track-border);
         // Fix alignment in IE 11. Cancel out for others
         top: 50%;
         transform: translateY(-50%);
@@ -76,8 +104,8 @@ $slider-colors: $colors !default;
         flex-direction: column; // Fix shrinked thumb at the end in IE 11
 
         .b-slider-thumb {
-            box-shadow: $slider-thumb-shadow;
-            border: $slider-thumb-border;
+            box-shadow: var(--slider-thumb-shadow);
+            border: var(--slider-thumb-border);
             border-radius: $slider-thumb-radius;
             background: $slider-thumb-background;
             &:focus {
@@ -112,7 +140,7 @@ $slider-colors: $colors !default;
 
     &.is-rounded {
         .b-slider-thumb {
-            border-radius: $radius-rounded;
+            border-radius: var(--radius-rounded, #{$radius-rounded});
         }
     }
     &.is-disabled {
@@ -128,33 +156,33 @@ $slider-colors: $colors !default;
         }
     }
 
-    @include slider-size($size-normal);
+    @include slider-size();
     &.is-small {
-        @include slider-size($size-small);
+        --slider-size: var(--size-small, #{$size-small});
     }
     &.is-medium {
-        @include slider-size($size-medium);
+        --slider-size: var(--size-medium, #{$size-medium});
     }
     &.is-large {
-        @include slider-size($size-large);
+        --slider-size: var(--size-large, #{$size-large});
     }
 
     @each $name, $pair in $slider-colors {
         $color: nth($pair, 1);
         &.is-#{$name} {
             .b-slider-fill {
-                background: $color !important;
+                background: var(--#{$name}, #{$color}) !important;
             }
         }
     }
 
     .b-slider-tick {
         position: absolute;
-		width: $slider-tick-width;
+		width: var(--slider-tick-width);
         transform: translate(-50%, -50%);
         top: 50%;
-        background: $slider-tick-background;
-        border-radius: $slider-tick-radius;
+        background: var(--slider-tick-background);
+        border-radius: var(--slider-tick-radius);
         &.is-tick-hidden {
             background: transparent;
         }

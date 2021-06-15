@@ -11,18 +11,35 @@ $tabs-toggle-link-focus-background-color: $tabs-toggle-link-hover-background-col
 $tabs-toggle-link-focus-active-border-color: $tabs-toggle-link-active-border-color !default;
 $tabs-toggle-link-focus-border-color: $tabs-toggle-link-hover-border-color !default;
 
+$css-vars-map: (
+    'tabs-link-focus-active-border-bottom-color': ($tabs-link-focus-active-border-bottom-color),
+    'tabs-link-focus-border-bottom-color': ($tabs-link-focus-border-bottom-color),
+    'tabs-boxed-link-focus-active-background-color': ($tabs-boxed-link-focus-active-background-color),
+    'tabs-boxed-link-focus-background-color': ($tabs-boxed-link-focus-background-color),
+    'tabs-boxed-link-focus-active-border-bottom-color': ($tabs-boxed-link-focus-active-border-bottom-color),
+    'tabs-boxed-link-focus-border-bottom-color': ($tabs-boxed-link-focus-border-bottom-color),
+    'tabs-toggle-link-focus-active-background-color': ($tabs-toggle-link-focus-active-background-color),
+    'tabs-toggle-link-focus-background-color': ($tabs-toggle-link-focus-background-color),
+    'tabs-toggle-link-focus-active-border-color': ($tabs-toggle-link-focus-active-border-color),
+    'tabs-toggle-link-focus-border-color': ($tabs-toggle-link-focus-border-color),
+);
+
+.b-tabs, [class^="b-tabs-"] {
+    @include registerCSSVars($css-vars-map, $at-root)
+}
+
 .b-tabs {
     .tabs {
         margin-bottom: 0;
         flex-shrink: 0;
         li {
             a:focus {
-                outline: $tabs-focused-outline;
-                border-bottom-color: $tabs-link-focus-active-border-bottom-color;
+                outline: var(--tabs-focused-outline);
+                border-bottom-color: var(--tabs-link-focus-active-border-bottom-color);
             }
             &:not(.is-active) {
                 a:focus {
-                    border-bottom-color: $tabs-link-focus-border-bottom-color;
+                    border-bottom-color: var(--tabs-link-focus-border-bottom-color);
                 }
             }
 
@@ -37,13 +54,13 @@ $tabs-toggle-link-focus-border-color: $tabs-toggle-link-hover-border-color !defa
         &.is-boxed {
             li {
                 a:focus {
-                    background-color: $tabs-boxed-link-focus-active-background-color;
-                    border-bottom-color: $tabs-boxed-link-focus-active-border-bottom-color;
+                    background-color: var(--tabs-boxed-link-focus-active-background-color);
+                    border-bottom-color: var(--tabs-boxed-link-focus-active-border-bottom-color);
                 }
                 &:not(.is-active) {
                     a:focus {
-                        background-color: $tabs-boxed-link-focus-background-color;
-                        border-bottom-color: $tabs-boxed-link-focus-border-bottom-color;
+                        background-color: var(--tabs-boxed-link-focus-background-color);
+                        border-bottom-color: var(--tabs-boxed-link-focus-border-bottom-color);
                     }
                 }
             }
@@ -51,13 +68,13 @@ $tabs-toggle-link-focus-border-color: $tabs-toggle-link-hover-border-color !defa
         &.is-toggle {
             li {
                 a:focus {
-                    background-color: $tabs-toggle-link-focus-active-background-color;
-                    border-color: $tabs-toggle-link-focus-active-border-color;
+                    background-color: var(--tabs-toggle-link-focus-active-background-color);
+                    border-color: var(--tabs-toggle-link-focus-active-border-color);
                 }
                 &:not(.is-active) {
                     a:focus {
-                        background-color: $tabs-toggle-link-focus-background-color;
-                        border-color: $tabs-toggle-link-focus-border-color;
+                        background-color: var(--tabs-toggle-link-focus-background-color);
+                        border-color: var(--tabs-toggle-link-focus-border-color);
                     }
                 }
             }
@@ -74,7 +91,7 @@ $tabs-toggle-link-focus-border-color: $tabs-toggle-link-hover-border-color !defa
             flex-basis: auto;
 
             &:focus {
-                outline: $tabs-items-focused-outline;
+                outline: var(--tabs-items-focused-outline);
             }
         }
         &.is-transitioning {
@@ -109,13 +126,13 @@ $tabs-toggle-link-focus-border-color: $tabs-toggle-link-hover-border-color !defa
                 li {
                     a {
                         border-bottom-color: transparent !important;
-                        border-right-color: $tabs-border-bottom-color !important;
-                        border-radius: $tabs-boxed-link-radius 0 0 $tabs-boxed-link-radius;
+                        border-right-color: var(--tabs-border-bottom-color, #{$tabs-border-bottom-color}) !important;
+                        border-radius: var(--tabs-boxed-link-radius, #{$tabs-boxed-link-radius}) 0 0 var(--tabs-boxed-link-radius, #{$tabs-boxed-link-radius});
                     }
 
                     &.is-active {
                         a {
-                            border-bottom-color: $tabs-border-bottom-color !important;
+                            border-bottom-color: var(--tabs-border-bottom-color, #{$tabs-border-bottom-color}) !important;
                             border-right-color: transparent !important;
                         }
                     }
@@ -128,12 +145,12 @@ $tabs-toggle-link-focus-border-color: $tabs-toggle-link-hover-border-color !defa
                     }
                     &:first-child {
                         a {
-                            border-radius: $tabs-toggle-link-radius $tabs-toggle-link-radius 0 0;
+                            border-radius: var(--tabs-toggle-link-radius, #{$tabs-toggle-link-radius}) var(--tabs-toggle-link-radius, #{$tabs-toggle-link-radius}) 0 0;
                         }
                     }
                     &:last-child {
                         a {
-                            border-radius: 0 0 $tabs-toggle-link-radius $tabs-toggle-link-radius;
+                            border-radius: 0 0 var(--tabs-toggle-link-radius, #{$tabs-toggle-link-radius}) var(--tabs-toggle-link-radius, #{$tabs-toggle-link-radius});
                         }
                     }
                 }
@@ -170,14 +187,14 @@ $tabs-toggle-link-focus-border-color: $tabs-toggle-link-hover-border-color !defa
                         a {
                             border-bottom-color: transparent !important;
                             border-right-color: transparent !important;
-                            border-left-color: $tabs-border-bottom-color !important;
-                            border-radius: 0 $tabs-boxed-link-radius $tabs-boxed-link-radius 0;
+                            border-left-color: var(--tabs-border-bottom-color, #{$tabs-border-bottom-color}) !important;
+                            border-radius: 0 var(--tabs-boxed-link-radius, #{$tabs-boxed-link-radius}) var(--tabs-boxed-link-radius, #{$tabs-boxed-link-radius}) 0;
                         }
 
                         &.is-active {
                             a {
-                                border-bottom-color: $tabs-border-bottom-color !important;
-                                border-right-color: $tabs-border-bottom-color !important;
+                                border-bottom-color: var(--tabs-border-bottom-color, #{$tabs-border-bottom-color}) !important;
+                                border-right-color: var(--tabs-border-bottom-color, #{$tabs-border-bottom-color}) !important;
                                 border-left-color: transparent !important;
                             }
                         }

@@ -5,59 +5,81 @@ Wikiki (https://github.com/Wikiki) licensed under
 MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
 */
 
+$steps-size: var(--size-normal, #{$size-normal}) !default;
 $steps-items-focused-outline: none !default;
-$steps-details-background-color: $body-background-color !default;
-$steps-maker-default-color: $grey-light !default;
+$steps-details-background-color: var(--body-background-color, #{$body-background-color}) !default;
+$steps-maker-default-color: var(--grey-light, #{$grey-light}) !default;
+$steps-maker-color: var(--scheme-main, #{$scheme-main}) !default;
 $steps-marker-default-border: .2em solid #fff !default;
-$steps-default-color: $grey-lighter !default;
-$steps-previous-color: $primary !default;
-$steps-active-color: $primary !default;
+$steps-default-color: var(--grey-lighter, #{$grey-lighter}) !default;
+$steps-previous-color: var(--primary, #{$primary}) !default;
+$steps-active-color: var(--primary, #{$primary}) !default;
 $steps-divider-height: .2em !default;
 $steps-vertical-padding: 1em 0 !default;
 $steps-mobile-max-width: $tablet !default;
+
 $steps-colors: $colors !default;
 
-@mixin steps-size($size) {
+$css-vars-map: (
+    'steps-size': ($steps-size),
+    'steps-items-focused-outline': ($steps-items-focused-outline),
+    'steps-details-background-color': ($steps-details-background-color),
+    'steps-maker-default-color': ($steps-maker-default-color),
+    'steps-maker-color': ($steps-maker-color),
+    'steps-marker-default-border': ($steps-marker-default-border),
+    'steps-default-color': ($steps-default-color),
+    'steps-previous-color': ($steps-previous-color),
+    'steps-active-color': ($steps-active-color),
+    'steps-divider-height': ($steps-divider-height),
+    'steps-vertical-padding': ($steps-vertical-padding),
+    'steps-mobile-max-width': ($steps-mobile-max-width),
+);
+
+.b-steps, [class^="b-steps-"] {
+    @include registerCSSVars($css-vars-map, $at-root)
+}
+
+@mixin steps-size() {
     .steps {
-        font-size: $size;
-        min-height: $size * 2;
+        font-size: var(--steps-size);
+        min-height: calc(#{var(--steps-size)} * 2);
 
         .step-items {
             .step-item {
                 .step-marker {
-                    height: $size * 2;
-                    width: $size * 2;
+                    height: calc(#{var(--steps-size)} * 2);
+                    width: calc(#{var(--steps-size)} * 2);
 
                     .icon {
                 *, *:before {
-                            font-size: $size;
+                            font-size: var(--steps-size);
                         }
                     }
                 }
 
                 .step-details {
                     .step-title {
-                        font-size: $size * 1.2;
-                        font-weight: $weight-semibold;
-                        line-height: $size;
+                        font-size: calc(#{var(--steps-size)} * 1.2);
+                        font-weight: var(--weight-semibold, #{$weight-semibold});
+                        line-height: var(--steps-size);
                     }
                 }
 
                 &:not(:first-child), &:only-child {
                     &::before {
-                        height: $steps-divider-height;
-                        top: #{$size};
+                        height: var(--steps-divider-height);
+                        top: #{var(--steps-size)};
                     }
                 }
                 &:only-child {
                     &::after {
-                        top: #{$size};
+                        top: #{var(--steps-size)};
                     }
                 }
 
                 @include until($steps-mobile-max-width) {
                     &::before, &::after, &:not(:first-child)::before {
-                        top: #{$size};
+                        top: #{var(--steps-size)};
                     }
                 }
             }
@@ -65,13 +87,14 @@ $steps-colors: $colors !default;
     }
 
     &.is-vertical {
+        --steps-divider-indent-height: #{calc(#{var(--steps-size)} - (#{var(--steps-divider-height)} / 2))};
         > .steps {
             &.has-label-right {
                 .step-items {
                     .step-item {
                         &:not(:first-child), &:only-child {
                             &::before, &::after {
-                                left: calc(#{$size} - #{$steps-divider-height / 2});
+                                left: var(--steps-divider-indent-height);
                             }
                         }
                     }
@@ -83,7 +106,7 @@ $steps-colors: $colors !default;
                         &:not(:first-child), &:only-child {
                             &::before, &::after {
                                 left: auto;
-                                right: calc(#{$size} - #{$steps-divider-height / 2});
+                                right: var(--steps-divider-indent-height);
                             }
                         }
                     }
@@ -98,7 +121,7 @@ $steps-colors: $colors !default;
                         .step-item {
                             &:not(:first-child), &:only-child {
                                 &::before, &::after {
-                                    left: calc(#{$size} - #{$steps-divider-height / 2});
+                                    left: var(--steps-divider-indent-height);
                                 }
                             }
                         }
@@ -110,7 +133,7 @@ $steps-colors: $colors !default;
                             &:not(:first-child), &:only-child {
                                 &::before, &::after {
                                     left: auto;
-                                    right: calc(#{$size} - #{$steps-divider-height / 2});
+                                    right: var(--steps-divider-indent-height);
                                 }
                             }
                         }
@@ -148,12 +171,12 @@ $steps-colors: $colors !default;
                 .step-marker {
                     align-items: center;
                     display: flex;
-                    border-radius: $radius;
-                    font-weight: $weight-bold;
+                    border-radius: var(--radius, #{$radius});
+                    font-weight: var(--weight-bold, #{$weight-bold});
                     justify-content: center;
-                    background: $steps-maker-default-color;
-                    color: $scheme-main;
-                    border: $steps-marker-default-border;
+                    background: var(--steps-maker-default-color);
+                    color: var(--steps-maker-color);
+                    border: var(--steps-marker-default-border);
                     z-index: 1;
                     overflow: hidden;
                 }
@@ -165,15 +188,15 @@ $steps-colors: $colors !default;
 
                     &.is-#{$name} {
                         &::before, &::after {
-                            background: linear-gradient(to left, $steps-default-color 50%, $color 50%);
+                            background: linear-gradient(to left, var(--steps-default-color) 50%, var(--#{$name}, #{$color}) 50%);
                             background-size: 200% 100%;
                             background-position: right bottom;
                         }
                         &.is-active {
                             .step-marker {
-                                background-color: $scheme-main;
-                                border-color: $color;
-                                color: $color;
+                                background-color: var(--steps-maker-color);
+                                border-color: var(--#{$name}, #{$color});
+                                color: var(--#{$name}, #{$color});
                             }
 
                             &::before, &::after {
@@ -182,8 +205,8 @@ $steps-colors: $colors !default;
                         }
                         &.is-previous {
                             .step-marker {
-                                color: $color-invert;
-                                background-color: $color;
+                                color: var(--#{$name}-invert, #{$color-invert});
+                                background-color: var(--#{$name}, #{$color});
                             }
 
                             &::before, &::after {
@@ -194,7 +217,7 @@ $steps-colors: $colors !default;
                 }
 
                 .step-marker{
-                    color: $scheme-main;
+                    color: var(--steps-maker-color);
                 }
 
                 .step-details {
@@ -221,7 +244,7 @@ $steps-colors: $colors !default;
                         content: " ";
                         display: block;
                         position: absolute;
-                        height: $steps-divider-height;
+                        height: var(--steps-divider-height);
                         bottom: 0;
                     }
                     &::before, &::after {
@@ -235,7 +258,7 @@ $steps-colors: $colors !default;
                 }
 
                 &::before, &::after {
-                    background: linear-gradient(to left, $steps-default-color 50%, $steps-active-color 50%);
+                    background: linear-gradient(to left, var(--steps-default-color) 50%, var(--steps-active-color) 50%);
                     background-size: 200% 100%;
                     background-position: right bottom;
                 }
@@ -246,9 +269,9 @@ $steps-colors: $colors !default;
                     }
 
                     .step-marker {
-                        background-color: $scheme-main;
-                        border-color: $steps-active-color;
-                        color: $steps-active-color;
+                        background-color: var(--steps-maker-color);
+                        border-color: var(--steps-active-color);
+                        color: var(--steps-active-color);
                     }
 
                     &::before, &::after {
@@ -257,8 +280,8 @@ $steps-colors: $colors !default;
                 }
                 &.is-previous {
                     .step-marker {
-                        color: $scheme-main;
-                        background-color: $steps-previous-color;
+                        color: var(--steps-maker-color);
+                        background-color: var(--steps-previous-color);
                     }
 
                     &::before, &::after {
@@ -279,7 +302,7 @@ $steps-colors: $colors !default;
                 flex-basis: auto;
 
                 &:focus {
-                    outline: $steps-items-focused-outline;
+                    outline: var(--steps-items-focused-outline);
                 }
             }
             &.is-transitioning {
@@ -290,7 +313,7 @@ $steps-colors: $colors !default;
         &.is-rounded {
             .step-item {
                 .step-marker {
-                    border-radius: $radius-rounded;
+                    border-radius: var(--radius-rounded, #{$radius-rounded});
                 }
             }
         }
@@ -299,7 +322,10 @@ $steps-colors: $colors !default;
             .step-item {
                 &:not(:first-child), &:only-child {
                     &::before {
-                        transition: background $speed-slow $easing;
+                        // transition: background $speed-slow $easing;
+                        transition-property: background;
+                        transition-duration: calc(var(--speed, #{$speed}) * 2);
+                        transition-timing-function: var(--easing, #{$easing});
                     }
                 }
             }
@@ -312,7 +338,7 @@ $steps-colors: $colors !default;
                         flex-direction: row;
 
                         > .step-details {
-                            background-color: $steps-details-background-color;
+                            background-color: var(--steps-details-background-color);
                             padding: .2em;
                         }
                     }
@@ -330,15 +356,15 @@ $steps-colors: $colors !default;
         }
     }
 
-    @include steps-size($size-normal);
+    @include steps-size();
     &.is-small {
-        @include steps-size($size-small);
+        --steps-size: var(--size-small, #{$size-small}); 
     }
     &.is-medium {
-        @include steps-size($size-medium);
+        --steps-size: var(--size-medium, #{$size-medium}); 
     }
     &.is-large {
-        @include steps-size($size-large);
+        --steps-size: var(--size-large, #{$size-large}); 
     }
 
     &.is-vertical {
@@ -357,10 +383,10 @@ $steps-colors: $colors !default;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    padding: $steps-vertical-padding;
+                    padding: var(--steps-vertical-padding);
 
                     &::before, &::after {
-                        background: linear-gradient(to top, $steps-default-color 50%, $steps-active-color 50%);
+                        background: linear-gradient(to top, var(--steps-default-color) 50%, var(--steps-active-color) 50%);
                         background-size: 100% 200%;
                         background-position: left bottom;
                     }
@@ -371,7 +397,7 @@ $steps-colors: $colors !default;
 
                         &.is-#{$name} {
                             &::before, &::after {
-                                background: linear-gradient(to top, $steps-default-color 50%, $color 50%);
+                                background: linear-gradient(to top, var(--steps-default-color) 50%, var(--#{$name}, #{$color}) 50%);
                                 background-size: 100% 200%;
                                 background-position: left bottom;
                             }
@@ -381,9 +407,9 @@ $steps-colors: $colors !default;
                     &:not(:first-child), &:only-child {
                         &::before {
                             height: 100%;
-                            width: $steps-divider-height;
+                            width: var(--steps-divider-height);
                             top: -50%;
-                            left: calc(50% - #{$steps-divider-height / 2});
+                            left: calc(50% - #{var(--steps-divider-height) / 2});
                         }
                     }
 
@@ -398,7 +424,7 @@ $steps-colors: $colors !default;
                             top: 50%;
                         }
                         &::after {
-                            width: $steps-divider-height;
+                            width: var(--steps-divider-height);
                             top: auto;
                             bottom: 50%;
                         }
@@ -428,7 +454,7 @@ $steps-colors: $colors !default;
                     .step-item {
                         .step-link {
                             > .step-details {
-                                background-color: $steps-details-background-color;
+                                background-color: var(--steps-details-background-color);
                             }
                         }
                     }
@@ -462,7 +488,7 @@ $steps-colors: $colors !default;
                                 content: " ";
                                 display: block;
                                 position: absolute;
-                                height: $steps-divider-height;
+                                height: var(--steps-divider-height);
                                 width: 25%;
                                 bottom: 0;
                                 left: 50%;

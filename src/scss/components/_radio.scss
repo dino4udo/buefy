@@ -1,6 +1,16 @@
-$radio-active-background-color: $primary !default;
+$radio-active-background-color: var(--primary, #{$primary}) !default;
 $radio-size: 1.25em !default;
+
 $radio-colors: $form-colors !default;
+
+$css-vars-map: (
+    'radio-active-background-color': ($radio-active-background-color),
+    'radio-size': ($radio-size),
+);
+
+.b-radio, [class^="b-radio-"] {
+    @include registerCSSVars($css-vars-map, $at-root)
+}
 
 .b-radio {
     &.radio {
@@ -29,9 +39,12 @@ $radio-colors: $form-colors !default;
                 flex-shrink: 0;
                 position: relative;
                 cursor: pointer;
-                width: $radio-size;
-                height: $radio-size;
-                transition: background $speed-slow $easing;
+                width: var(--radio-size);
+                height: var(--radio-size);
+                // transition: background $speed-slow $easing;
+                transition-property: background;
+                transition-duration: calc(var(--speed, #{$speed}) * 2);
+                transition-timing-function: var(--easing, #{$easing});
                 border-radius: 50%;
                 border: 2px solid $grey;
                 &:before {
@@ -39,29 +52,32 @@ $radio-colors: $form-colors !default;
                     display: flex;
                     position: absolute;
                     left: 50%;
-                    margin-left: calc(-#{$radio-size}/2);
+                    margin-left: calc((-1 * #{var(--radio-size)}) / 2);
                     bottom: 50%;
-                    margin-bottom: calc(-#{$radio-size}/2);
-                    width: $radio-size;
-                    height: $radio-size;
-                    transition: transform $speed-slow $easing;
+                    margin-bottom: calc((-1 * #{var(--radio-size)}) / 2);
+                    width: var(--radio-size);
+                    height: var(--radio-size);
+                    // transition: transform $speed-slow $easing;
+                    transition-property: transform;
+                    transition-duration: calc(var(--speed, #{$speed}) * 2);
+                    transition-timing-function: var(--easing, #{$easing});
                     border-radius: 50%;
                     transform: scale(0);
-                    background-color: $radio-active-background-color;
+                    background-color: var(--radio-active-background-color);
                 }
                 @each $name, $pair in $radio-colors {
                     $color: nth($pair, 1);
                     &.is-#{$name}:before {
-                        background: $color;
+                        background: var(--#{$name} #{$color});
                     }
                 }
             }
             &:checked + .check {
-                border-color: $radio-active-background-color;
+                border-color: var(--radio-active-background-color);
                 @each $name, $pair in $radio-colors {
                     $color: nth($pair, 1);
                     &.is-#{$name} {
-                        border-color: $color;
+                        border-color: var(--#{$name} #{$color});
                     }
                 }
                 &:before {
@@ -73,18 +89,20 @@ $radio-colors: $form-colors !default;
                     box-shadow: 0 0 0.5em rgba($grey, 0.8);
                 }
                 &:checked + .check {
-                    box-shadow: 0 0 0.5em rgba($radio-active-background-color, 0.8);
+                    box-shadow: 0 0 0.5em rgba(var(--scheme-invert-rgb, #{bulmaToRGB($black)}), 0.1);
+                    
                     @each $name, $pair in $radio-colors {
                         $color: nth($pair, 1);
                         &.is-#{$name} {
-                            box-shadow: 0 0 0.5em rgba($color, 0.8);
+                            --focus-box-shadow-color: #{bulmaCSSVarRgba($name, 0.8)};
+                            box-shadow: 0 0 0.5em var(--focus-box-shadow-color, #{bulmaRgba($color, 0.8)});
                         }
                     }
                 }
             }
         }
         .control-label {
-            padding-left: $control-padding-horizontal;
+            padding-left: var(--control-padding-horizontal, #{$control-padding-horizontal});
         }
         &.button {
             display: flex;
@@ -98,11 +116,11 @@ $radio-colors: $form-colors !default;
         }
         &:hover {
             input[type=radio]:not(:disabled) + .check {
-                border-color: $radio-active-background-color;
+                border-color: var(--radio-active-background-color);
                 @each $name, $pair in $radio-colors {
                     $color: nth($pair, 1);
                     &.is-#{$name} {
-                        border-color: $color;
+                        border-color: var(--#{$name}, #{$color});
                     }
                 }
             }

@@ -1,11 +1,32 @@
-$checkbox-active-background-color: $primary !default;
+$checkbox-active-background-color: var(--primary, #{$primary}) !default;
+$checkbox-focus-box-shadow-color-hsla: bulmaCSSVarRgba('primary', 0.8) !default;
+$checkbox-focus-box-shadow-color: var(--checkbox-focus-box-shadow-color-hsla, #{bulmaRgba($primary, 0.8)}) !default;
 $checkbox-background-color: transparent !default;
 $checkbox-border-color: $grey !default;
-$checkbox-border-radius: $radius !default;
+$checkbox-border-radius: var(--radius, #{$radius}) !default;
 $checkbox-border-width: 2px !default;
-$checkbox-checkmark-color: $primary-invert !default;
+$checkbox-checkmark-color: var(--primary-invert, #{$primary-invert}) !default;
 $checkbox-size: 1.25em !default;
+$checkbox-padding: var(--control-padding-horizontal, #{$control-padding-horizontal}) !default;
+
 $checkbox-colors: $form-colors !default;
+
+$css-vars-map: (
+    'checkbox-active-background-color': ($checkbox-active-background-color),
+    'checkbox-focus-box-shadow-color-hsla': ($checkbox-focus-box-shadow-color-hsla),
+    'checkbox-focus-box-shadow-color': ($checkbox-focus-box-shadow-color),
+    'checkbox-background-color': ($checkbox-background-color),
+    'checkbox-border-color': ($checkbox-border-color),
+    'checkbox-border-radius': ($checkbox-border-radius),
+    'checkbox-border-width': ($checkbox-border-width),
+    'checkbox-checkmark-color': ($checkbox-checkmark-color),
+    'checkbox-size': ($checkbox-size),
+    'checkbox-padding': ($checkbox-padding),
+);
+
+.b-checkbox, [class^="b-checkbox-"] {
+    @include registerCSSVars($css-vars-map, $at-root)
+}
 
 .b-checkbox {
     &.checkbox {
@@ -26,55 +47,59 @@ $checkbox-colors: $form-colors !default;
             outline: none;
             z-index: -1;
             + .check {
-                width: $checkbox-size;
-                height: $checkbox-size;
+                width: var(--checkbox-size, #{$checkbox-size});
+                height: var(--checkbox-size, #{$checkbox-size});
                 flex-shrink: 0;
-                border-radius: $checkbox-border-radius;
-                border: $checkbox-border-width solid $checkbox-border-color;
-                transition: background $speed-slow $easing;
-                background: $checkbox-background-color
+                border-radius: var(--checkbox-border-radius);
+                border: var(--checkbox-border-width) solid var(--checkbox-border-color);
+                // transition: background $speed-slow $easing;
+                transition-property: background;
+                transition-duration: calc(var(--speed, #{$speed}) * 2);
+                transition-timing-function: var(--easing, #{$easing});
+                background: var(--checkbox-background-color)
             }
             &:checked + .check {
-                background: $checkbox-active-background-color url(checkmark($checkbox-checkmark-color)) no-repeat center center;
-                border-color: $checkbox-active-background-color;
+                background: var(--checkbox-active-background-color) url(checkmark($checkbox-checkmark-color)) no-repeat center center;
+                border-color: var(--checkbox-active-background-color);
                 @each $name, $pair in $checkbox-colors {
                     $color: nth($pair, 1);
                     $color-invert: nth($pair, 2);
                     &.is-#{$name} {
-                        background: $color url(checkmark($color-invert)) no-repeat center center;
-                        border-color: $color;
+                        background: var(--#{$name}, #{$color}) url(checkmark($color-invert)) no-repeat center center;
+                        border-color: var(--#{$name}, #{$color});
                     }
                 }
             }
             &:indeterminate + .check {
-                background: $checkbox-active-background-color url(indeterminate($checkbox-checkmark-color)) no-repeat center center;
-                border-color: $checkbox-active-background-color;
+                background: var(--checkbox-active-background-color) url(indeterminate($checkbox-checkmark-color)) no-repeat center center;
+                border-color: var(--checkbox-active-background-color);
                 @each $name, $pair in $checkbox-colors {
                     $color: nth($pair, 1);
                     $color-invert: nth($pair, 2);
                     &.is-#{$name} {
-                        background: $color url(indeterminate($color-invert)) no-repeat center center;
-                        border-color: $color;
+                        background: var(--#{$name}, #{$color}) url(indeterminate($color-invert)) no-repeat center center;
+                        border-color: var(--#{$name}, #{$color});
                     }
                 }
             }
             &:focus {
                 + .check {
-                    box-shadow: 0 0 0.5em rgba($grey, 0.8);
+                    box-shadow: 0 0 0.5em bulmaRgba($grey, 0.8);
                 }
                 &:checked + .check {
-                    box-shadow: 0 0 0.5em rgba($checkbox-active-background-color, 0.8);
+                    box-shadow: 0 0 0.5em var(--checkbox-focus-box-shadow-color);
                     @each $name, $pair in $checkbox-colors {
                         $color: nth($pair, 1);
                         &.is-#{$name} {
-                            box-shadow: 0 0 0.5em rgba($color, 0.8);
+                            --focus-box-shadow-color: #{bulmaCSSVarRgba($name, 0.8)};
+                            box-shadow: 0 0 0.5em var(--focus-box-shadow-color, #{bulmaRgba($color, 0.8)});
                         }
                     }
                 }
             }
         }
         .control-label {
-            padding-left: $control-padding-horizontal;
+            padding-left: var(--checkbox-padding);
         }
         &.button {
             display: flex;
@@ -84,11 +109,11 @@ $checkbox-colors: $form-colors !default;
         }
         &:hover {
             input[type=checkbox]:not(:disabled) + .check {
-                border-color: $checkbox-active-background-color;
+                border-color: var(--checkbox-active-background-color);
                 @each $name, $pair in $checkbox-colors {
                     $color: nth($pair, 1);
                     &.is-#{$name} {
-                        border-color: $color;
+                        border-color: var(--#{$name}, #{$color});
                     }
                 }
             }
