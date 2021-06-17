@@ -1,6 +1,6 @@
 {
   "name": "buefy-css-variables",
-  "version": "0.9.70",
+  "version": "0.9.71",
   "homepage": "https://buefy.org",
   "description": "Lightweight UI components for Vue.js based on Bulma CSS Variables",
   "author": "Rafael Beraldo <rafael.pimpa@gmail.com>",
@@ -63,7 +63,7 @@
     "components"
   ],
   "dependencies": {
-    "bulma-css-variables": "https://github.com/dino4udo/bulma-css-variables"
+    "bulma-css-variables": "0.9.30"
   },
   "peerDependencies": {
     "vue": "^2.6.11"
