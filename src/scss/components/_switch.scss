@@ -37,7 +37,7 @@ $css-vars-map: (
             align-items: center;
             flex-shrink: 0;
             width: var(--switch-width);
-            height: calc((var(--switch-width) / 2) + var(--switch-padding));
+            height: calc((#{var(--switch-width)} * 0.5) + #{var(--switch-padding)});
             padding: var(--switch-padding);
             background: var(--grey-light, #{$grey-light});
             border-radius: var(--radius, #{$radius});
@@ -58,8 +58,8 @@ $css-vars-map: (
                 content: "";
                 display: block;
                 border-radius: var(--radius, #{$radius});
-                width: calc((var(--switch-width) - (var(--switch-padding) * 2)) / 2);
-                height: calc((var(--switch-width) - (var(--switch-padding) * 2)) / 2);
+                width: calc((#{var(--switch-width)} - (#{var(--switch-padding)} * 2)) * 0.5);
+                height: calc((var(--switch-width) - (var(--switch-padding) * 2)) * 0.5);
                 background: var(--background, #{$background});
                 box-shadow: 0 3px 1px 0 rgba(var(--scheme-invert-rgb, #{bulmaToRGB($black)}), 0.05), 0 2px 2px 0 rgba(var(--scheme-invert-rgb, #{bulmaToRGB($black)}), 0.1), 0 3px 3px 0 rgba(var(--scheme-invert-rgb, #{bulmaToRGB($black)}), 0.05);
                 // transition: transform $speed-slow $easing;

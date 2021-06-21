@@ -87,7 +87,7 @@ $css-vars-map: (
     }
 
     &.is-vertical {
-        --steps-divider-indent-height: #{calc(#{var(--steps-size)} - (#{var(--steps-divider-height)} / 2))};
+        --steps-divider-indent-height: #{calc(#{var(--steps-size)} - (#{var(--steps-divider-height)} * 0.5))};
         > .steps {
             &.has-label-right {
                 .step-items {
@@ -409,7 +409,7 @@ $css-vars-map: (
                             height: 100%;
                             width: var(--steps-divider-height);
                             top: -50%;
-                            left: calc(50% - #{var(--steps-divider-height) / 2});
+                            left: calc(50% - #{var(--steps-divider-height) * 0.5});
                         }
                     }
 

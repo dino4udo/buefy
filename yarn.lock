@@ -2451,10 +2451,10 @@ builtin-status-codes@^3.0.0:
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
   integrity sha1-hZgoeOIbmOHGZCXgPQF0eI9Wnug=
 
-bulma-css-variables@0.9.31:
-  version "0.9.31"
-  resolved "https://registry.yarnpkg.com/bulma-css-variables/-/bulma-css-variables-0.9.31.tgz#fd99cab4cf72859258f80accdcc7198f0c45e015"
-  integrity sha512-Z9xio9+KFKaEz8dOyweXsUCzK4EUGtOQOKBrN8yvefTzz/niIIVh14uHNZyKLm2y90uuYDESX2cAJQDtzckcyg==
+bulma-css-variables@0.9.32:
+  version "0.9.32"
+  resolved "https://registry.yarnpkg.com/bulma-css-variables/-/bulma-css-variables-0.9.32.tgz#bc9f304913cf376612e69c93abd405e3412882d6"
+  integrity sha512-PUa7+pfg9lDhdouaJRwkJmBM3HUmC76IlcLAfiQCgWd/uoEf6HKCWWNk7bSuEaCeWIkj8QgqqKz6CTTQc/d6iQ==
 
 bulma-css-vars@0.4.3:
   version "0.4.3"

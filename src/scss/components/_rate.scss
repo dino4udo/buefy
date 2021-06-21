@@ -22,7 +22,7 @@ $css-vars-map: (
     align-items: center;
     display: flex;
     &:not(:last-child) {
-        margin-bottom: calc(var(--block-spacing, #{$block-spacing}) / 2);
+        margin-bottom: calc(#{var(--block-spacing, #{$block-spacing})} * 0.5);
     }
     &.is-spaced .rate-item:not(:last-child) {
         margin-right: var(--rate-spaced);
