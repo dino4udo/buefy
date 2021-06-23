@@ -6,6 +6,8 @@ MIT (https://github.com/Wikiki/bulma-steps/blob/master/LICENSE)
 */
 
 $steps-size: var(--size-normal, #{$size-normal}) !default;
+$steps-height: auto !default;
+$steps-background-color: var(--body-background-color, #{$body-background-color}) !default;
 $steps-items-focused-outline: none !default;
 $steps-details-background-color: var(--body-background-color, #{$body-background-color}) !default;
 $steps-maker-default-color: var(--grey-light, #{$grey-light}) !default;
@@ -22,6 +24,8 @@ $steps-colors: $colors !default;
 
 $css-vars-map: (
     'steps-size': ($steps-size),
+    'steps-height': ($steps-height),
+    'steps-background-color': ($steps-background-color),
     'steps-items-focused-outline': ($steps-items-focused-outline),
     'steps-details-background-color': ($steps-details-background-color),
     'steps-maker-default-color': ($steps-maker-default-color),
@@ -39,12 +43,16 @@ $css-vars-map: (
     @include registerCSSVars($css-vars-map, $at-root)
 }
 
-@mixin steps-size() {
+@mixin steps-size {
     .steps {
+        background-color: var(--steps-background-color);
         font-size: var(--steps-size);
         min-height: calc(#{var(--steps-size)} * 2);
-
+        
         .step-items {
+            height: var(--steps-height);
+            align-items: center;
+
             .step-item {
                 .step-marker {
                     height: calc(#{var(--steps-size)} * 2);
@@ -58,6 +66,8 @@ $css-vars-map: (
                 }
 
                 .step-details {
+                    background-color: var(--steps-background-color);
+
                     .step-title {
                         font-size: calc(#{var(--steps-size)} * 1.2);
                         font-weight: var(--weight-semibold, #{$weight-semibold});
@@ -324,7 +334,7 @@ $css-vars-map: (
                     &::before {
                         // transition: background $speed-slow $easing;
                         transition-property: background;
-                        transition-duration: calc(var(--speed, #{$speed}) * 2);
+                        transition-duration: calc(#{var(--speed, #{$speed})} * 2);
                         transition-timing-function: var(--easing, #{$easing});
                     }
                 }
@@ -409,7 +419,7 @@ $css-vars-map: (
                             height: 100%;
                             width: var(--steps-divider-height);
                             top: -50%;
-                            left: calc(50% - #{var(--steps-divider-height) * 0.5});
+                            left: calc(50% - #{var(--steps-divider-height)} * 0.5);
                         }
                     }
 
