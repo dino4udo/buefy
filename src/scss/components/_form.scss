@@ -159,8 +159,9 @@ $css-vars-map: (
         }
     }
     &.is-floating-in-label {
+        --field-floating-indent: #{calc(#{var(--floating-in-height)} * 0.5 - (#{var(--size-large, #{$size-large})} * 0.75) * 0.5)};
+        
         > .label {
-            --field-floating-indent: #{calc(#{var(--floating-in-height)} * 0.5 - (#{var(--size-large, #{$size-large})} * 0.75) * 0.5)};
             top: 0.25em;
 
             + .control {
