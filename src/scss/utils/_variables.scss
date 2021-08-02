@@ -17,9 +17,3 @@ $link-focus-border: $primary !default;
 $label-weight: var(--weight-semibold, #{$weight-semibold}) !default;
 
 $at-root: true !default;
-
-:root {
-    @include registerCSSVarColor('primary', ($primary, $primary-invert, $primary-light, $primary-dark));
-    @include registerCSSVarColor('info', ($info, $info-invert));
-    @include registerCSSVarColor('link', ($link, $link-invert));
-}
