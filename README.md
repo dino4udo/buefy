@@ -2,6 +2,12 @@
 
 > Buefy is a lightweight library of responsive UI components for [Vue.js](https://vuejs.org/) based on [Bulma](http://bulma.io/) framework and design.
 
+## ⚠️ DEPRECATION WARNING ⚠️
+
+This package has been deprecated.
+
+Please find new and updated Bulma and Buefy styles with CSS Variables at [@bulvar/buefy](https://github.com/daniil4udo/bulvar)
+
 ## Features
 
 * Uses CSS variables and have Bulma CSS Variables as dependency
