@@ -66,6 +66,7 @@
     "bulma-css-variables": "^0.9.5"
   },
   "peerDependencies": {
+    "bulma-css-variables": "^0.9.5",
     "vue": "^2.6.11"
   },
   "devDependencies": {
