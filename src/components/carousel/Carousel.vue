@@ -310,13 +310,13 @@ export default {
         },
         // handle drag event
         dragStart(event) {
-            if (!this.hasDrag ||
-                !event.target.draggable) return
+            // Drag only on the background (or first element in slot of carousel-items container)
+            const carouselWrapper = event.target.parentElement.parentElement.parentElement
+            if (!this.hasDrag || !carouselWrapper.classList.contains('carousel-items')) return
+
             this.dragX = event.touches ? event.changedTouches[0].pageX : event.pageX
             if (event.touches) {
                 this.pauseTimer()
-            } else {
-                event.preventDefault()
             }
         },
         dragEnd(event) {
