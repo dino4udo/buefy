@@ -14,10 +14,10 @@
         </progress>
         <div
             class="carousel-items"
-            @mousedown="dragStart"
+            @mousedown.prevent="dragStart"
             @mouseup="dragEnd"
-            @touchstart.stop="dragStart"
-            @touchend.stop="dragEnd">
+            @touchstart="dragStart"
+            @touchend="dragEnd">
             <slot/>
             <div
                 v-if="arrow"
@@ -323,7 +323,7 @@ export default {
             if (this.dragX === false) return
             const detected = event.touches ? event.changedTouches[0].pageX : event.pageX
             const diffX = detected - this.dragX
-            if (Math.abs(diffX) > 30) {
+            if (Math.abs(diffX) > 5) {
                 if (diffX < 0) {
                     this.next()
                 } else {
