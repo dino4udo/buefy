@@ -168,11 +168,13 @@ export default {
             ])
         },
         genNavbarBrandNode() {
-            return createElement(
-                'div',
-                { class: 'navbar-brand' },
-                [this.$slots.brand(), this.genBurgerNode()]
-            )
+            if(this.$slots.brand) {
+                return createElement(
+                    'div',
+                    { class: 'navbar-brand' },
+                    [this.$slots.brand(), this.genBurgerNode()]
+                )
+            }
         },
         genBurgerNode() {
             if (this.mobileBurger) {
