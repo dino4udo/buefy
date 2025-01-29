@@ -2,10 +2,11 @@
     <section class="datepicker-table">
         <div class="datepicker-body" :class="{'has-events':hasEvents}">
             <div class="datepicker-months">
-                <template v-for="(date, index) in monthDates" :key="index">
+                <template v-for="(date, index) in monthDates">
                     <a
                         :ref="`month-${date.getMonth()}`"
                         v-if="selectableDate(date) && !disabled"
+                        :key="`selectableDate-${index}`"
                         :class="[
                             classObject(date),
                             {'has-event': eventsDateMatch(date)},
@@ -32,6 +33,7 @@
                     </a>
                     <div
                         v-else
+                        :key="index"
                         :class="classObject(date)"
                         class="datepicker-cell"
                     >
